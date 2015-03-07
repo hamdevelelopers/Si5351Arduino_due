@@ -7,14 +7,14 @@ void setup()
 {
   // Start serial and initialize the Si5351
   Serial.begin(57600);
-  si5351.init(SI5351_CRYSTAL_LOAD_8PF);
+  si5351.init(SI5351_CRYSTAL_LOAD_8PF, 0);
 
   // Set CLK0 to output 14 MHz with a fixed PLL frequency
   si5351.set_pll(SI5351_PLL_FIXED, SI5351_PLLA);
-  si5351.set_freq(14000000, SI5351_PLL_FIXED, SI5351_CLK0);
+  si5351.set_freq(1400000000, SI5351_PLL_FIXED, SI5351_CLK0);
 
   // Set CLK1 to output 20 MHz
-  si5351.set_freq(20000000, 0, SI5351_CLK1);
+  si5351.set_freq(2000000000, 0, SI5351_CLK1);
 }
 
 void loop()
