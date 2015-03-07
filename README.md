@@ -1,3 +1,9 @@
+**************************
+Si5351 library changed to be used on the Arduino DUE and other CORTEX series ARM processors.
+No internal saving of reference coeffecients, this must be set before the frequency is set in the program.
+
+*************************
+
 Si5351 Library for Arduino
 ==========================
 This is a basic library for the Si5351 series of clock generator ICs from [Silicon Labs](1) for the Arduino development environment. It will allow you to control the Si5351 with an Arduino, and without depending on the proprietary ClockBuilder software from Silicon Labs.
@@ -71,13 +77,12 @@ Individual outputs can be turned on and off. In the second argument, use a 0 to 
 
     si5351.clock_enable(SI5351_CLK0, 0);
 
-Also, there will be some inherent error in the reference crystal's actual frequency, so we can measure the difference between the actual and nominal output frequency in Hz, multiply by 10, make it an integer, and enter this correction factor into the library to store in EEPROM for future use. Once this is stored, it should not need to be set again unless you want to redo the calibration. With an accurate measurement at one frequency, this calibration should be good across the entire tuning range:
+Also, there will be some inherent error in the reference crystal's actual frequency, so we can measure the difference between the actual and nominal output frequency in Hz, multiply by 10, make it an integer, and enter this correction factor into the library. With an accurate measurement at one frequency, this calibration should be good across the entire tuning range:
 
     si5351.set_correction(-900);
+	
+This value is not saved, and must, if changed be externaly saved and read before the frequency output is set.	
 
-You can also use the get_correction() method to check the EEPROM to see if there is a non-zero correction factor stored, then skip setting the correction factor if there's already something other than the default (such as at startup, for example):
-
-    int32_t corr_factor = si5351.get_correction()
 
 One thing to note: the library is set for a 25 MHz reference crystal. If you are using a 27 MHz crystal, please change the SI5351_XTAL_FREQ define in si5351.h.
 
