@@ -3,6 +3,8 @@
  *
  * Copyright (C) 2015 Jason Milldrum <milldrum@gmail.com>
  *                    Dana H. Myers <k6jq@comcast.net>
+ * with modifications to run on arduino DUE by:
+ * 					  Thomas S. Knutsen <la3pna@gmail.com>
  *
  * Many defines derived from clk-si5351.h in the Linux kernel.
  * Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
@@ -32,7 +34,7 @@
 #include "Arduino.h"
 #include "Wire.h"
 #include <stdint.h>
-#include <avr/eeprom.h>
+//#include <avr/eeprom.h>
 
 /* Define definitions */
 

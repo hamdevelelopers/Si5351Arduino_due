@@ -3,6 +3,7 @@
  *
  * Copyright (C) 2015 Jason Milldrum <milldrum@gmail.com>
  *                    Dana H. Myers <k6jq@comcast.net>
+ *					  Thomas S. Knutsen <la3pna@gmail.com>
  *
  * Some tuning algorithms derived from clk-si5351.c in the Linux kernel.
  * Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
@@ -11,6 +12,11 @@
  * rational_best_approximation() derived from lib/rational.c in
  * the Linux kernel.
  * Copyright (C) 2009 emlix GmbH, Oskar Schirmer <oskar@scara.com>
+ *
+ * Version modified to remove dependencies on <avr/eeprom.h> for use
+ *	with the arduino DUE and other ARM based devices.
+ *	get_correction(void) stop existing in this version. A
+ *	All EEPROM handleing must be done outside the Si5351 library if neccesarry.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,13 +33,13 @@
  */
 
 #include <stdint.h>
-#include <avr/eeprom.h>
+//#include <avr/eeprom.h>
 
 #include "Arduino.h"
 #include "Wire.h"
 #include "si5351.h"
 
-uint32_t EEMEM ee_ref_correction = 0;
+//uint32_t EEMEM ee_ref_correction = 0;
 
 /********************/
 /* Public functions */
@@ -74,7 +80,7 @@ void Si5351::init(uint8_t xtal_load_c, uint32_t ref_osc_freq)
 	si5351_write(SI5351_CRYSTAL_LOAD, xtal_load_c);
 
 	// Get the correction factor from EEPROM
-	ref_correction = eeprom_read_dword(&ee_ref_correction);
+	//ref_correction = eeprom_read_dword(&ee_ref_correction);
 }
 
 /*
@@ -536,11 +542,13 @@ void Si5351::update_status(void)
  */
 void Si5351::set_correction(int32_t corr)
 {
+	/*
 	int32_t temp = eeprom_read_dword(&ee_ref_correction);
 	if(temp != corr)
 	{
 		eeprom_write_dword(&ee_ref_correction, corr);
 	}
+	*/
 	ref_correction = corr;
 	
 	// TODO: recalc the synth params
@@ -570,13 +578,13 @@ void Si5351::set_phase(enum si5351_clock clk, uint8_t phase)
  *
  * Returns the oscillator correction factor stored
  * in EEPROM.
- */
+ *
 int32_t Si5351::get_correction(void)
 {
 	return eeprom_read_dword(&ee_ref_correction);
 }
 
-/*
+*
  * pll_reset(enum si5351_pll target_pll)
  *
  * target_pll - Which PLL to reset
