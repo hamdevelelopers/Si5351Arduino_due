@@ -9,7 +9,6 @@ drive_strength	KEYWORD2
 update_status	KEYWORD2
 set_correction	KEYWORD2
 set_phase	KEYWORD2
-get_correction	KEYWORD2
 pll_reset	KEYWORD2
 set_ms_source	KEYWORD2
 set_int	KEYWORD2
