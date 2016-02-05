@@ -1,3 +1,6 @@
+
+THIS LIBRARY IS OLD AND UNSUPPORTED. THE CURRENT Si5351 LIBRARY SUPPORTS CORTEX SERIES ARM PROCESSORS.
+
 **************************
 Si5351 library changed to be used on the Arduino DUE and other CORTEX series ARM processors.
 No internal saving of reference coeffecients, this must be set before the frequency is set in the program.
